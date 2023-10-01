@@ -3,9 +3,9 @@ import sys
 
 from pathlib import Path
 
-import PyQt5
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+import PySide6
+from PySide6.QtWidgets import *
+from PySide6.QtGui import *
 
 from HomeUI.HomePage import Ui_HomePage
 from Feature.GUI import FeatureMergeForm, FeatureExtractionForm

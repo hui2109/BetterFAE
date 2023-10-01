@@ -7,8 +7,8 @@ import sys
 import shutil
 
 import traceback
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PySide6.QtWidgets import *
+from PySide6.QtCore import *
 
 from SA.GUI.Process import Ui_Process
 from SA.PipelineManager import PipelineManager
@@ -21,7 +21,7 @@ from SA.Utility import mylog
 
 
 class CVRun(QThread):
-    signal = pyqtSignal(str)
+    signal = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -73,7 +73,7 @@ class CVRun(QThread):
 
 
 class ProcessForm(QWidget, Ui_Process):
-    close_signal = pyqtSignal(bool)
+    close_signal = Signal(bool)
 
     def __init__(self, parent=None):
         self.train_dc = DataContainer()
@@ -134,8 +134,7 @@ class ProcessForm(QWidget, Ui_Process):
     # Data Related
     def LoadTrainingData(self):
         dlg = QFileDialog()
-        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', directory=r'C:\MyCode\FAE\Example',
-                                           filter="csv files (*.csv)")
+        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', filter="csv files (*.csv)")
         if file_name:
             self.lineEditTrainingData.setText(file_name)
 
@@ -148,8 +147,7 @@ class ProcessForm(QWidget, Ui_Process):
 
     def LoadTestingData(self):
         dlg = QFileDialog()
-        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', directory=r'C:\MyCode\FAE\Example',
-                                           filter="csv files (*.csv)")
+        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', filter="csv files (*.csv)")
         if file_name:
             self.lineEditTestingData.setText(file_name)
 
@@ -411,8 +409,8 @@ class ProcessForm(QWidget, Ui_Process):
             return
 
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         if dlg.exec_():
             store_folder = dlg.selectedFiles()[0]

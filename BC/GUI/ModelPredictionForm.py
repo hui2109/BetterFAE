@@ -4,8 +4,8 @@ Author: Yang SONG (songyangmri@gmail.com)
 """
 import os, csv
 from traceback import format_exc
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import pyqtSignal
+from PySide6.QtWidgets import *
+from PySide6.QtCore import Signal
 
 from BC.DataContainer.DataContainer import DataContainer
 from BC.FeatureAnalysis.IndexDict import Index2Dict
@@ -20,7 +20,7 @@ from BC.Visualization.DrawROCList import DrawROCList, DrawPRCurveList
 
 
 class ModelPredictionForm(QWidget):
-    close_signal = pyqtSignal(bool)
+    close_signal = Signal(bool)
 
     def __init__(self):
         super().__init__()
@@ -60,8 +60,8 @@ class ModelPredictionForm(QWidget):
 
     def LoadFaeModel(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         message_box = QMessageBox()
         if dlg.exec_():

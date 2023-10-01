@@ -6,9 +6,9 @@ import sys
 import shutil
 import traceback
 
-from PyQt5.QtWidgets import *
+from PySide6.QtWidgets import *
 from BC.GUI.Process import Ui_Process
-from PyQt5.QtCore import *
+from PySide6.QtCore import *
 from BC.FeatureAnalysis.DataBalance import *
 from BC.FeatureAnalysis.Normalizer import *
 from BC.FeatureAnalysis.DimensionReduction import *
@@ -19,7 +19,7 @@ from BC.FeatureAnalysis.CrossValidation import *
 
 
 class CVRun(QThread):
-    signal = pyqtSignal(str)
+    signal = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -74,7 +74,7 @@ class CVRun(QThread):
 
 
 class ProcessConnection(QWidget, Ui_Process):
-    close_signal = pyqtSignal(bool)
+    close_signal = Signal(bool)
 
     def __init__(self, parent=None):
         self.training_data_container = DataContainer()
@@ -164,8 +164,7 @@ class ProcessConnection(QWidget, Ui_Process):
 
     def LoadTrainingData(self):
         dlg = QFileDialog()
-        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', directory=r'C:\MyCode\FAE\Example',
-                                           filter="csv files (*.csv)")
+        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', filter="csv files (*.csv)")
         if file_name:
             try:
                 self.training_data_container.Load(file_name)
@@ -373,8 +372,8 @@ class ProcessConnection(QWidget, Ui_Process):
             return
 
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         if dlg.exec_():
             store_folder = dlg.selectedFiles()[0]

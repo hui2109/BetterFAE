@@ -7,8 +7,8 @@ import os
 import traceback
 
 import pandas as pd
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore
+from PySide6.QtWidgets import *
+from PySide6 import QtCore
 
 from SA.Utility import mylog
 from SA.Utility.Constant import *
@@ -24,7 +24,7 @@ def CheckTextInCombo(text, combo):
 
 
 class VisualizationForm(QWidget, Ui_Visualization):
-    close_signal = QtCore.pyqtSignal(bool)
+    close_signal = QtCore.Signal(bool)
 
     def __init__(self, parent=None):
         self._root_folder = ''
@@ -81,8 +81,8 @@ class VisualizationForm(QWidget, Ui_Visualization):
 
     def LoadResult(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         if dlg.exec_():
             self._root_folder = dlg.selectedFiles()[0]
@@ -188,8 +188,8 @@ class VisualizationForm(QWidget, Ui_Visualization):
 
     def SaveFigure(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         if dlg.exec_():
             store_folder = dlg.selectedFiles()[0]
@@ -290,8 +290,7 @@ class VisualizationForm(QWidget, Ui_Visualization):
 #############################################################
     def LoadRefData(self):
         dlg = QFileDialog()
-        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', directory=r'C:\MyCode\FAE\Example',
-                                           filter="csv files (*.csv)")
+        file_name, _ = dlg.getOpenFileName(self, 'Open CSV file', filter="csv files (*.csv)")
 
         if file_name:
             self.ref_df = pd.read_csv(file_name, index_col=0)

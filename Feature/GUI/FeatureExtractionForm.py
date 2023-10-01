@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pandas as pd
 import SimpleITK as sitk
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore
-from PyQt5.QtCore import QThread
+from PySide6.QtWidgets import *
+from PySide6 import QtCore
+from PySide6.QtCore import QThread
 
 from Feature.GUI.FeatureExtraction import Ui_FeatureExtraction
 from Feature.RadiomicsParamsConfig import RadiomicsParamsConfig, feature_classes_inface2yaml, image_classes_inface2yaml
@@ -20,9 +20,9 @@ from Feature.FileMatcher import UniqueFileMatcherManager
 
 
 class FileCheckerThread(QThread):
-    progress_signal = QtCore.pyqtSignal(int)
-    text_signal = QtCore.pyqtSignal(str)
-    finish_signal = QtCore.pyqtSignal(bool)
+    progress_signal = QtCore.Signal(int)
+    text_signal = QtCore.Signal(str)
+    finish_signal = QtCore.Signal(bool)
 
     def __init__(self, image_match_manager, roi_match_manager, root_folder):
         super().__init__()
@@ -68,9 +68,9 @@ class FileCheckerThread(QThread):
 
 
 class FeatureExtractThread(QThread):
-    progress_signal = QtCore.pyqtSignal(int)
-    text_signal = QtCore.pyqtSignal(str)
-    finish_signal = QtCore.pyqtSignal(bool)
+    progress_signal = QtCore.Signal(int)
+    text_signal = QtCore.Signal(str)
+    finish_signal = QtCore.Signal(bool)
 
     def __init__(self, image_paths, roi_paths, store_path, extractor: RadiomicsFeatureExtractor,
                  only_matrix: bool):
@@ -132,7 +132,7 @@ class FeatureExtractThread(QThread):
 
 
 class FeatureExtractionForm(QWidget):
-    close_signal = QtCore.pyqtSignal(bool)
+    close_signal = QtCore.Signal(bool)
 
     def __init__(self):
         super(FeatureExtractionForm, self).__init__()
@@ -187,8 +187,8 @@ class FeatureExtractionForm(QWidget):
 
     def LoadDataRoot(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
         if dlg.exec_():
             self._root_folder = dlg.selectedFiles()[0]
             self.ui.lineEditSourceFolder.setText(self._root_folder)
@@ -362,8 +362,7 @@ class FeatureExtractionForm(QWidget):
 
     def BrowseRadiomicsFeatureCofigFile(self):
         dlg = QFileDialog()
-        file_name, _ = dlg.getOpenFileName(self, 'Open Radiomics Config file', directory='',
-                                           filter="Config (*.yaml)")
+        file_name, _ = dlg.getOpenFileName(self, 'Open Radiomics Config file', filter="Config (*.yaml)")
         if file_name:
             self.ui.configLineEdit.setText(file_name)
             self.radiomics_params = RadiomicsParamsConfig(file_name)

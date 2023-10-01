@@ -1,7 +1,7 @@
 import re
 
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore
+from PySide6.QtWidgets import *
+from PySide6 import QtCore
 
 from BC.GUI.Visualization import Ui_Visualization
 from BC.FeatureAnalysis.Classifier import *
@@ -15,7 +15,7 @@ from BC.Utility.Constants import *
 
 
 class VisualizationConnection(QWidget, Ui_Visualization):
-    close_signal = QtCore.pyqtSignal(bool)
+    close_signal = QtCore.Signal(bool)
 
     def __init__(self, parent=None):
         self._root_folder = ''
@@ -89,8 +89,8 @@ class VisualizationConnection(QWidget, Ui_Visualization):
 
     def LoadAll(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         if dlg.exec_():
             self._root_folder = dlg.selectedFiles()[0]
@@ -196,8 +196,8 @@ class VisualizationConnection(QWidget, Ui_Visualization):
 
     def Save(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         if dlg.exec_():
             store_folder = dlg.selectedFiles()[0]
@@ -699,8 +699,8 @@ class VisualizationConnection(QWidget, Ui_Visualization):
             return
 
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
 
         if dlg.exec_():
             store_folder = dlg.selectedFiles()[0]

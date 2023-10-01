@@ -175,8 +175,8 @@ class FeatureExtractionForm(QWidget):
 
     def LoadDataRoot(self):
         dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.DirectoryOnly)
-        dlg.setOption(QFileDialog.ShowDirsOnly)
+        dlg.setFileMode(QFileDialog.FileMode.Directory)
+        dlg.setOption(QFileDialog.Option.ShowDirsOnly)
         if dlg.exec_():
             self._root_folder = dlg.selectedFiles()[0]
             self.ui.lineEditSourceFolder.setText(self._root_folder)
@@ -349,8 +349,7 @@ class FeatureExtractionForm(QWidget):
 
     def BrowseRadiomicsFeatureCofigFile(self):
         dlg = QFileDialog()
-        file_name, _ = dlg.getOpenFileName(self, 'Open Radiomics Config file', directory=r'D:\research',
-                                           filter="Config (*.yaml)")
+        file_name, _ = dlg.getOpenFileName(self, 'Open Radiomics Config file', filter="Config (*.yaml)")
         if file_name:
             self.ui.configLineEdit.setText(file_name)
             self.radiomics_params = RadiomicsParamsConfig(file_name)
