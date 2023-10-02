@@ -221,6 +221,9 @@ class LDA(Classifier):
 class RandomForest(Classifier):
     def __init__(self, **kwargs):
         super(RandomForest, self).__init__()
+
+        kwargs['n_jobs'] = -1
+
         if 'n_estimators' not in kwargs.keys():
             super(RandomForest, self).SetModel(RandomForestClassifier(random_state=RANDOM_SEED[CLASSIFIER_RF],
                                                                       n_estimators=200,
@@ -314,6 +317,9 @@ class DecisionTree(Classifier):
 class GaussianProcess(Classifier):
     def __init__(self, **kwargs):
         super(GaussianProcess, self).__init__()
+
+        kwargs['n_jobs'] = -1
+
         super(GaussianProcess, self).SetModel(GaussianProcessClassifier(
             random_state=RANDOM_SEED[CLASSIFIER_GP], **kwargs))
 
@@ -355,6 +361,9 @@ class NaiveBayes(Classifier):
 class LR(Classifier):
     def __init__(self, **kwargs):
         super(LR, self).__init__()
+
+        kwargs['n_jobs'] = -1
+
         if 'solver' in kwargs.keys():
             super(LR, self).SetModel(LogisticRegression(penalty=None, **kwargs))
         else:
@@ -407,6 +416,9 @@ class LR(Classifier):
 class LRLasso(Classifier):
     def __init__(self, **kwargs):
         super(LRLasso, self).__init__()
+
+        # kwargs['n_jobs'] = -1
+
         if 'solver' in kwargs.keys():
             super(LRLasso, self).SetModel(LogisticRegression(penalty='l1', **kwargs))
         else:
