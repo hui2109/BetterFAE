@@ -662,8 +662,8 @@ class VisualizationConnection(QWidget, Ui_Visualization):
             self.spinBoxFeatureNumber.setValue(int(current_fn))
             if not (self.checkROCTrain.isChecked() or self.checkROCCVTrain.isChecked() or
                     self.checkROCCVValidation.isChecked() or self.checkROCTrain.isChecked()):
-                self.checkROCCVTrain.setCheckState(True)
-                self.checkROCCVValidation.setCheckState(True)
+                self.checkROCCVTrain.setCheckState(QtCore.Qt.CheckState.Checked)
+                self.checkROCCVValidation.setCheckState(QtCore.Qt.CheckState.Checked)
             self.UpdateROC()
 
             # Update the AUC versus feature number
@@ -675,7 +675,7 @@ class VisualizationConnection(QWidget, Ui_Visualization):
             if not (self.checkPlotTrain.isChecked() or
                     self.checkPlotCVTrain.isChecked() or
                     self.checkPlotCVValidation.isChecked()):
-                self.checkPlotCVValidation.setCheckState(True)
+                self.checkPlotCVValidation.setCheckState(QtCore.Qt.CheckState.Checked)
             self.UpdatePlot()
 
             # Update the Contribution
