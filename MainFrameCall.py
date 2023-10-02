@@ -6,9 +6,11 @@ from HomeUI.HomePageForm import HomePageForm
 
 if __name__ == '__main__':
     # windows专用参数
-    # sys._enablelegacywindowsfsencoding()
+    sys._enablelegacywindowsfsencoding()
 
-    app = QApplication(sys.argv)
+    app = QApplication.instance()
+    if app is None: 
+        app = QApplication(sys.argv)
     main_frame = HomePageForm()
     main_frame.show()
     sys.exit(app.exec())
